@@ -1,5 +1,4 @@
 @extends('admin.main')
-<meta name="csrf-token" content="{{ csrf_token() }}">
 @section('head')
     <script src="/ckeditor/ckeditor.js"></script>
 @endsection
