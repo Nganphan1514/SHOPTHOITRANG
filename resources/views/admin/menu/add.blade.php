@@ -1,7 +1,8 @@
 @extends('admin.main')
 
 @section('head')
-    <script src="/ckeditor/ckeditor.js"></script>
+<!-- CKEditor 5 Classic CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 @endsection
 
 @section('content')
@@ -16,7 +17,7 @@
             <div class="form-group">
                 <label>Danh Mục</label>
                 <select class="form-control" name="parent_id">
-                    <option value="0"> Danh Mục Cha </option>
+                    <option value="0"> Danh Mục </option>
                     @foreach($menus as $menu)
                     <option value="{{ $menu->id }}">{{ $menu->name }}</option>
                     @endforeach

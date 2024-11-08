@@ -1,6 +1,7 @@
 @extends('admin.main')
 @section('head')
-    <script src="/ckeditor/ckeditor.js"></script>
+<!-- CKEditor 5 Classic CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 @endsection
 
 @section('content')
@@ -83,7 +84,11 @@
 @endsection
 
 @section('footer')
-    <script>
-        CKEDITOR.replace('content');
-    </script>
+   <script>
+    ClassicEditor
+        .create(document.querySelector('#content'))
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 @endsection
