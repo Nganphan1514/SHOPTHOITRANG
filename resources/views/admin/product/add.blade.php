@@ -1,7 +1,7 @@
 @extends('admin.main')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @section('head')
-<!-- CKEditor 5 Classic CDN -->
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
 @endsection
 
 @section('content')
@@ -84,11 +84,7 @@
 @endsection
 
 @section('footer')
-   <script>
-    ClassicEditor
-        .create(document.querySelector('#content'))
-        .catch(error => {
-            console.error(error);
-        });
-</script>
+    <script>
+        CKEDITOR.replace('content');
+    </script>
 @endsection

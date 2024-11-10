@@ -1,20 +1,19 @@
 @extends('admin.main')
 
-
 @section('content')
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="menu">Tiêu đề</label>
-                        <input type="text" name="name" value="{{ old('name') }}" class="form-control"  placeholder="Nhập tên sản phẩm">
+                        <label for="menu">Tiêu Đề</label>
+                        <input type="text" name="name" value="{{ old('name') }}" class="form-control">
                     </div>
                 </div>
-<div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
-                        <label for="menu">Đường dẫn</label>
-                        <input type="text" name="name" value="{{ old('url') }}" class="form-control"  placeholder="Nhập tên sản phẩm">
+                        <label for="menu">Đường Dẫn</label>
+                        <input type="text" name="url" value="{{ old('url') }}" class="form-control">
                     </div>
                 </div>
             </div>
@@ -25,13 +24,14 @@
                 <div id="image_show">
 
                 </div>
-                <input type="hidden" name="thumb" id="file">
+                <input type="hidden" name="thumb" id="file ">
             </div>
 
+
             <div class="form-group">
-                        <label for="menu">Sắp xếp</label>
-                        <input type="number" name="sort_by" value="{{ old('sort_by') }}"  class="form-control" >
-                    </div>
+                <label for="menu">Sắp Xếp</label>
+                <input type="number" name="sort_by" value="1" class="form-control" >
+            </div>
 
             <div class="form-group">
                 <label>Kích Hoạt</label>
@@ -53,4 +53,3 @@
         @csrf
     </form>
 @endsection
-
