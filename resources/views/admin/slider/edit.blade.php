@@ -20,7 +20,7 @@
 
             <div class="form-group">
                 <label for="menu">Ảnh Sản Phẩm</label>
-                <input type="file"  class="form-control" id="upload">
+                <input type="file" name="thumb" class="form-control" id="upload">
                 <div id="image_show">
                     <a href="{{ $slider->thumb }}">
                         <img src="{{ $slider->thumb }}" width="100px">
