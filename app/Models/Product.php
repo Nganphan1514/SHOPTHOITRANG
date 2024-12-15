@@ -11,7 +11,6 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'quantity',
         'description',
         'content',
         'menu_id',
@@ -25,5 +24,9 @@ class Product extends Model
     {
         return $this->hasOne(Menu::class, 'id', 'menu_id')
             ->withDefault(['name' => '']);
+    }
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class, 'product_size')->withPivot('quantity');
     }
 }
