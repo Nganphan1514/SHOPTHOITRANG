@@ -17,8 +17,10 @@ class Cart extends Model
         'user_id',
         'customer_id',
         'product_id',
+        'size_id',
         'pty',
-        'price'
+        'price',
+        'status_id',
     ];
 
     public function product()
@@ -45,4 +47,15 @@ class Cart extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
+    public function sizes()
+{
+    return $this->belongsTo(Size::class, 'size_id', 'id');
 }
+    public function status()
+    {
+        return $this->belongsTo(StatusOrder::class, 'status_id');
+    }
+    
+
+}
+

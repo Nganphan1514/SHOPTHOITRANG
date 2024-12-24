@@ -53,7 +53,7 @@
             <ul class="profile-dropdown list-unstyled m-0">
                 <li><a href="{{ route('user.profile', ['id' => Auth::user()->id]) }}" class="text-decoration-none text-dark">Profile</a></li>
                 <li><a href="{{ route('order') }}" class="text-decoration-none text-dark">Order</a></li>
-                @if(Auth::user()->role_id == 1)
+                @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
         <li><a href="{{ route('admin') }}" class="text-decoration-none text-dark">Go to Admin</a></li>
     @endif
                 <li>

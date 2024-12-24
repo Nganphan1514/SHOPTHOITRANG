@@ -20,7 +20,7 @@ class CheckAdminRole
     public function handle($request, Closure $next)
     {
         // Kiểm tra xem người dùng đã đăng nhập và có role là 1
-        if (Auth::check() && Auth::user()->role_id == 1) {
+        if (Auth::check() && Auth::user()->role_id == 1 || Auth::user()->role_id == 3) {
             return $next($request); // Tiếp tục truy cập
         }
 

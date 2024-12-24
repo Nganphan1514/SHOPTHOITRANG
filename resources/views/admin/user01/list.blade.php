@@ -18,7 +18,7 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->role_id }}</td>
+                    <td>{{ $user->role->name }}</td>
                     <td>{!! $user->status == 1 ? '<span class="badge badge-success">Có</span>' : '<span class="badge badge-danger">Không</span>' !!}</td>
                     <td>
                         <a class="btn btn-primary btn-sm" href="/admin/user01/edit/{{ $user->id }}">

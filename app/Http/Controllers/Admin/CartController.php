@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Services\CartService;
+use App\Models\Cart;
 
 class CartController extends Controller
 {
@@ -45,7 +46,24 @@ class CartController extends Controller
             'carts' => $carts
         ]);
     }
+    public function updateStatus(Request $request)
+    {
+        $cart = Cart::find($request->cart_id);
 
+        if ($cart) {
+            $cart->status_id = $request->status_id;
+            $cart->save();
+
+            return response()->json([
+                'message' => 'Status updated successfully',
+                'status' => $cart->status_id,
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Cart not found',
+        ], 404);
+    }
     public function show_user(Customer $customer)
     {
         $carts = $this->cart->getProductForCart($customer);

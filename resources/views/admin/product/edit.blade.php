@@ -47,12 +47,16 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="menu">Số lượng</label>
-                        <input type="number" name="quantity" value="{{ $product->quantity }}"  class="form-control" >
-                    </div>
-                </div>
+            <div class="row">
+    @foreach ($sizes as $size)
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="size_{{ $size->id }}">Size {{ $size->name }}</label>
+                <input type="number" name="sizes[{{ $size->id }}]" value="{{ $product->sizes->where('id', $size->id)->first()->pivot->quantity ?? 0 }}" placeholder="Số lượng" class="form-control">
+            </div>
+        </div>
+    @endforeach
+</div>
 
             <div class="form-group">
                 <label>Mô Tả </label>

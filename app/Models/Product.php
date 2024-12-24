@@ -17,7 +17,8 @@ class Product extends Model
         'price',
         'price_sale',
         'active',
-        'thumb'
+        'thumb',
+        'Made_in'
     ];
 
     public function menu()
@@ -29,4 +30,17 @@ class Product extends Model
     {
         return $this->belongsToMany(Size::class, 'product_size')->withPivot('quantity');
     }
+    public function sizes_have()
+    {
+        return $this->belongsToMany(Size::class, 'product_size', 'product_id', 'size_id')
+        ->withPivot('quantity')
+        ->wherePivot('quantity', '>', 0); // Lọc ra các size còn hàng
+    }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+
+
 }

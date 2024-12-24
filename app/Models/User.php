@@ -21,14 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'roleid',
+        'role_id',
         'status',
         'SĐT',
         'address',
     ];
 public function role()
     {
-        return $this->belongsTo(Role::class, 'roleid');
+        return $this->belongsTo(Role::class, 'role_id');
     }
     /**
      * The attributes that should be hidden for arrays.
@@ -49,4 +49,5 @@ public function role()
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
 }

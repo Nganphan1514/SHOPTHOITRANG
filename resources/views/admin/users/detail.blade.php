@@ -21,9 +21,10 @@
             <tr class="table_head">
                 <th class="column-1">IMG</th>
                 <th class="column-2">Product</th>
-                <th class="column-3">Price</th>
-                <th class="column-4">Quantity</th>
-                <th class="column-5">Total</th>
+                <th class="column-3">Size</th>
+                <th class="column-4">Price</th>
+                <th class="column-5">Quantity</th>
+                <th class="column-6">Total</th>
             </tr>
 
             @foreach($carts as $key => $cart)
@@ -38,15 +39,63 @@
                         </div>
                     </td>
                     <td class="column-2">{{ $cart->product->name }}</td>
-                    <td class="column-3">{{ number_format($cart->price, 0, '', '.') }}</td>
-                    <td class="column-4">{{ $cart->pty }}</td>
-                    <td class="column-5">{{ number_format($price, 0, '', '.') }}</td>
+                    <th class="column-3">{{$cart->sizes->name}}</th>
+                    <td class="column-4">{{ number_format($cart->price, 0, '', '.') }}</td>
+                    <td class="column-5">{{ $cart->pty }}</td>
+                    <td class="column-6">{{ number_format($price, 0, '', '.') }}</td>
                 </tr>
             @endforeach
                 <tr>
                     <td colspan="4" class="text-right">Tổng Tiền</td>
                     <td>{{ number_format($total, 0, '', '.') }}</td>
                 </tr>
+
+                                @switch($cart->status_id)
+    @case(1)
+        <tr>
+            <th>Trạng thái đơn:</th>
+            <th>
+            <p>Đơn hàng đang chờ xét duyệt<p>
+            </th>
+        </tr>
+        @break
+    @case(2)
+    <tr>
+        <th>Trạng thái đơn:</th>
+        <th>
+        <p>Đơn hàng đã bị từ chối bởi bạn<p></th>
+    </tr>
+    @break
+    @case(3)
+        <tr>
+            <th>Trạng thái đơn:</th>
+        <th><p>Đơn hàng đã được duyệt chờ vận chuyển<p></th>
+            
+    </tr>
+        @break
+
+    @case(4)
+        <tr>
+            <th>Trạng thái đơn:</th>
+            <th><p>Đơn hàng đang giao<p></th>
+        </tr>
+        @break
+
+    @case(5)
+    <th>Trạng thái đơn:</th>
+        <tr>Giao đơn thành công</tr>
+        @break
+
+    @case(6)
+    <th>Trạng thái đơn:</th>
+        <tr>Giao đơn thất bại</tr>
+        @break    
+    @default
+        <tr>
+            <th>Trạng thái đơn:</th>
+            <th><p>Trạng thái không xác định<p></th>
+        </tr>
+@endswitch
             </tbody>
         </table>
     </div>

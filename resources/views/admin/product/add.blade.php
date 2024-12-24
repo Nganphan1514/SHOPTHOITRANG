@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
     <form action="" method="POST">
         <div class="card-body">
             <div class="row">
@@ -28,12 +29,12 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    {{-- <div class="form-group">
+                {{-- <div class="col-md-6">
+                    <div class="form-group">
                         <label for="menu">Số lượng</label>
                         <input type="number" name="quantity" value="{{ old('quantity') }}"  class="form-control" >
-                    </div> --}}
-                </div>
+                    </div>
+                </div> --}}
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="menu">Giá Gốc</label>
@@ -48,7 +49,45 @@
                     </div>
                 </div>
             </div>
-
+            {{-- <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="menu">Size S</label> 
+                        <input type="number" name="sizes[{{ $size->id }}]" placeholder="Số lượng"  class="form-control" >
+                    </div>
+                    </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="menu">Size M</label> 
+                        <input type="number" name="sizes[{{ $size->id }}]" placeholder="Số lượng"  class="form-control" >
+                        </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="menu">Size L</label> 
+                        <input type="number" name="sizes[{{ $size->id }}]" placeholder="Số lượng"  class="form-control" >
+                    </div>
+                    </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="menu">Size XL</label> 
+                        <input type="number" name="sizes[{{ $size->id }}]" placeholder="Số lượng"  class="form-control" >
+                        </div>
+                </div>
+            </div> --}}
+            <div class="row">
+    @foreach ($sizes as $size)
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="size_{{ $size->id }}">Size {{ $size->name }}</label>
+                <input type="number" name="sizes[{{ $size->id }}]" placeholder="Số lượng" class="form-control">
+            </div>
+        </div>
+    @endforeach
+</div>
             <div class="form-group">
                 <label>Mô Tả </label>
                 <textarea name="description" class="form-control">{{ old('description') }}</textarea>

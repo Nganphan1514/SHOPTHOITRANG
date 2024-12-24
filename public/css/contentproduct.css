@@ -1,3 +1,12 @@
+/* Style for selected size button */
+.size-button.selected {
+    border-color: #007bff;
+    /* Highlight border */
+    background-color: #007bff;
+    /* Highlight background */
+    color: white;
+    /* Text color for selected size */
+}
 .bread-crumb {
     background-color: #ffffff;
     padding: 15px 20px;
@@ -113,4 +122,57 @@
     max-width: 400px; 
     height: auto;
     margin-left: auto;
+}
+/* câu hỏi  */
+.reviews {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.reviews h4 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.reviews form {
+    margin-bottom: 20px;
+}
+
+.reviews textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.reviews button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reviews button:hover {
+    background-color: #218838;
+}
+
+.user-reviews {
+    margin-top: 20px;
+}
+
+.review {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.review strong {
+    color: #007bff;
 }

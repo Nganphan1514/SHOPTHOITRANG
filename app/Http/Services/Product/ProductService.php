@@ -5,6 +5,7 @@ namespace App\Http\Services\Product;
 
 
 use App\Models\Product;
+use App\Models\ProductSize;
 
 class ProductService
 {
@@ -42,5 +43,31 @@ class ProductService
 {
     return Product::where('name', 'LIKE', '%' . $query . '%')->paginate(10);
 }
+
+    public function store($data)
+    {
+        $product = Product::create([
+            'name' => $data['name'],
+            'menu_id' => $data['menu_id'],
+            'price' => $data['price'],
+            'price_sale' => $data['price_sale'],
+            'description' => $data['description'],
+            'content' => $data['content'],
+            'thumb' => $data['thumb'],
+            'active' => $data['active']
+        ]);
+
+        if (isset($data['sizes']) && is_array($data['sizes'])) {
+            foreach ($data['sizes'] as $sizeId => $quantity) {
+                ProductSize::create([
+                    'product_id' => $product->id,
+                    'size_id' => $sizeId,
+                    'quantity' => $quantity,
+                ]);
+            }
+        }
+
+        return $product;
+    }
 
 }

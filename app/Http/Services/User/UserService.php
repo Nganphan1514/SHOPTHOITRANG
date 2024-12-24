@@ -14,7 +14,7 @@ class UserService
     {
         try {
             // Lấy các trường từ request
-            $data = $request->only(['name', 'email', 'password', 'roleid', 'status']);
+            $data = $request->only(['name', 'email', 'password', 'role_id', 'status']);
             
             // Hash mật khẩu trước khi lưu
             $data['password'] = Hash::make($data['password']);
@@ -47,7 +47,7 @@ class UserService
     public function update($request, $user)
     {
         try {
-            $data = $request->only(['name', 'email', 'password', 'roleid']);
+            $data = $request->only(['name', 'email', 'password', 'role_id']);
 
             if ($request->filled('password')) {
                 $data['password'] = Hash::make($request->input('password'));

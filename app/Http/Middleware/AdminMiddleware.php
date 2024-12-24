@@ -13,7 +13,7 @@ class AdminMiddleware
         // if (Auth::guard('user01')->check() && Auth::guard('user')->user()->role === 'admin') {
         //     return $next($request);
         // }
-        if (Auth::guard('user')->check() && Auth::guard('user')->user()->roleid === 1) { // 1 là roleid cho admin
+        if (Auth::guard('user')->check() && Auth::guard('user')->user()->role_id === 1) { // 1 là roleid cho admin
             return $next($request);
         }
 

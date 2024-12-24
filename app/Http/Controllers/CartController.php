@@ -32,12 +32,13 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $products = $this->cartService->getProduct() ?? [];
-        
+        // $size_name = 'Default Size';
         return view('carts.list', [
             'title' => 'Giỏ Hàng',
             'products' => $products,
             'user'=>$user,
-            'carts' => Session::get('carts')
+            'carts' => Session::get('carts'),
+            // 'size_name' => $size_name,
         ]);
     }
 

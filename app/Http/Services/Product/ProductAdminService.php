@@ -3,11 +3,12 @@
 
 namespace App\Http\Services\Product;
 
-
+use Illuminate\Support\Facades\Log;
 use App\Models\Menu;
 use App\Models\Product;
+use App\Models\ProductSize;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Log;
+
 
 
 class ProductAdminService
@@ -46,7 +47,7 @@ class ProductAdminService
             Session::flash('success', 'Thêm Sản phẩm thành công');
         } catch (\Exception $err) {
             Session::flash('error', 'Thêm Sản phẩm lỗi');
-            \Log::info($err->getMessage());
+            Log::info($err->getMessage());
             return  false;
         }
 
@@ -70,7 +71,7 @@ class ProductAdminService
             Session::flash('success', 'Cập nhật thành công');
         } catch (\Exception $err) {
             Session::flash('error', 'Có lỗi vui lòng thử lại');
-            \Log::info($err->getMessage());
+            Log::info($err->getMessage());
             return false;
         }
         return true;
@@ -80,10 +81,49 @@ class ProductAdminService
     {
         $product = Product::where('id', $request->input('id'))->first();
         if ($product) {
+            $product->sizes()->detach();
             $product->delete();
             return true;
         }
 
         return false;
     }
+    // public function store($data)
+    // {
+    //     // Tạo sản phẩm mới
+    //     $product = Product::create([
+    //         'name' => $data['name'],
+    //         'menu_id' => $data['menu_id'],
+    //         'price' => $data['price'],
+    //         'price_sale' => $data['price_sale'],
+    //         'description' => $data['description'],
+    //         'content' => $data['content'],
+    //         'thumb' => $data['thumb'],
+    //         'active' => $data['active']
+    //     ]);
+
+    //     // Lưu các size của sản phẩm
+    //     if (isset($data['sizes'])) {
+    //         foreach ($data['sizes'] as $sizeId => $quantity) {
+    //             if ($quantity === null || $quantity === '') {
+    //                 $quantity = 0;  // Set default quantity to 0 if empty or null
+    //             }
+
+    //             // Kiểm tra số lượng sản phẩm
+    //             if ($quantity < 0) {
+    //                 Session::flash('error', 'Số lượng không thể nhỏ hơn 0.');
+    //                 return false; // Dừng lại nếu số lượng âm
+    //             }
+
+    //             // Lưu size với số lượng đã kiểm tra
+    //             ProductSize::create([
+    //                 'product_id' => $product->id,
+    //                 'size_id' => $sizeId,
+    //                 'quantity' => $quantity,
+    //             ]);
+    //         }
+    //     }
+
+    //     return $product;
+    // }
 }

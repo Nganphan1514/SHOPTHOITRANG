@@ -14,7 +14,13 @@ use App\Http\Controllers\Admin\Users\RegisterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReviewController;
 
+//cau hoi
+Route::post('/reviews/{review}/reply', [ReviewController::class, 'reply'])->name('reviews.reply');
+//qư
+
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 // Phần đăng kí
 Route::get('admin/users/register', [RegisterController::class, 'index'])->name('register');
 Route::post('admin/users/register', [RegisterController::class, 'register']);
@@ -58,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('add-cart', [CartController::class, 'index']);
     Route::get('carts', [CartController::class, 'show']);
-    Route::post('update-cart', [CartController::class, 'update']);
+    Route::post('update-cart', [CartController::class, 'update'])->name('cart.update');
     Route::get('carts/delete/{id}', [CartController::class, 'remove']);
     Route::post('carts', [CartController::class, 'addCart']);
 
@@ -107,6 +113,8 @@ Route::middleware(['auth'])->group(function () {
         // Routes phần Cart
         Route::get('customers', [\App\Http\Controllers\Admin\CartController::class, 'index']);
         Route::get('customers/view/{customer}', [\App\Http\Controllers\Admin\CartController::class, 'show']);
+        Route::post('customers/update-status', [\App\Http\Controllers\Admin\CartController::class, 'updateStatus'])->name('customers.updateStatus');
+
     });
 
 

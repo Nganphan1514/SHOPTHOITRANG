@@ -19,10 +19,15 @@ class CreateCartsTable extends Migration
             $table->integer('product_id');
             $table->integer('pty');
             $table->integer('price');
+            $table->unsignedBigInteger('status_id');
             $table->timestamps();
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('customers')
+                ->onDelete('cascade');
+            $table->foreign('status_id')
+                ->references('id')
+                ->on('statusorder')
                 ->onDelete('cascade');
         });
     }

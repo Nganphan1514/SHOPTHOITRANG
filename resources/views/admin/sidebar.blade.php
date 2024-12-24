@@ -91,7 +91,7 @@
 </div>
         </div>
 
-        <!-- SidebarSearch Form -->
+        {{-- <!-- SidebarSearch Form -->
         <div class="form-inline">
       <form action="/search" method="GET" class="input-group" data-widget="sidebar-search">
         <input class="form-control form-control-sidebar" type="text" name="query" placeholder="Search" aria-label="Search">
@@ -101,7 +101,7 @@
             </button>
         </div>
         </form>
-        </div>
+        </div> --}}
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -109,11 +109,12 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="/admin/home" class="nav-link">
+                    <a href="{{route('admin')}}" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p> Trang Chủ </p>
                     </a>
                 </li>
+                @if(Auth::user()->role_id == 1)
 
                      <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -138,7 +139,7 @@
 
                     </ul>
                 </li>
-
+@else
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -229,6 +230,7 @@
 
                     </ul>
                 </li>
+             @endif
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

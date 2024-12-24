@@ -35,47 +35,68 @@
                         <span class="mtext-106 cl2 product-price">
 							{!! \App\Helpers\Helper::price($product->price, $product->price_sale) !!}
 						</span>
-
                         <p class="stext-102 cl3 p-t-23 product-description">
-                            {{ $product->description }}
-                        </p>
-                        @if($product->quantity > 0 )
+                                                    Made in: {{ $product->Made_in }}
+                                                </p>
                         <p class="stext-102 cl3 p-t-23 product-description">
-                           Số lượng: {{ $product->quantity }}
+                           Mô tả: {{ $product->description }}
                         </p>
+                        
+<div class="p-t-33">
+    <form action="/add-cart" method="post">
 
+        @if ($product->price !== null)
 
-                        <!-- Form mua hàng -->
-                        <div class="p-t-33">
-                            <div class="flex-w  p-b-10">
-                                   <div class="size-204 flex-w flex-m respon6-next">
-                                    <form action="/add-cart" method="post">
-                                        @if ($product->price !== NULL)
-                                            <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                                <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                    <i class="fs-16 zmdi zmdi-minus"></i>
-                                                </div>
-                                                <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                                       name="num_product" value="1">
-                                                <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                    <i class="fs-16 zmdi zmdi-plus"></i>
-                                                </div>
-                                            </div>
-                                                                             <button type="submit"
-                                                    class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 ">
-                                               THÊM GIỎ HÀNG
-                                            </button>
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        @endif
-                                        @csrf
-                                    </form>
-                                </div>
-                     
-                            </div>
-                        </div>
-                        @else
-                        <p style="color: red;">Sản phẩm đã bán hết</p>
+                <div id="size-quantity" class="mt-2" style="display: none;"> Số lượng: <span id="quantity-value">0</span></div>
+
+            <!-- Hiển thị các size -->
+            <div class="flex-w p-b-10">
+                <label class="form-label w-100">Chọn kích thước:</label>
+                <div class="btn-group flex-wrap" role="group" aria-label="Size options">
+                    @foreach ($product->sizes as $size)
+                        @if ($size->pivot->quantity > 0)
+                            <button type="button" 
+                                    class="btn btn-outline-secondary size-button" 
+                                    data-size-id="{{ $size->id }}"
+                                    data-quantity="{{ $size->pivot->quantity }}">
+                                {{ $size->name }}
+                            </button>
                         @endif
+                    @endforeach
+                </div>
+                
+                <input type="hidden" name="size_id" id="selected-size" required>
+<input type="hidden" name="size_name" id="selected-size-name">
+
+
+<input type="hidden" name="size_quantity" id="selected-quantity" required>
+            </div>
+
+            <!-- Số lượng -->
+            <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+                <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                    <i class="fs-16 zmdi zmdi-minus"></i>
+                </div>
+                <input class="mtext-104 cl3 txt-center num-product" type="number" name="num_product" value="1" min="1">
+                <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                    <i class="fs-16 zmdi zmdi-plus"></i>
+                </div>
+            </div>
+
+            <!-- Nút thêm vào giỏ hàng -->
+            <button type="submit" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                THÊM GIỎ HÀNG
+            </button>
+
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            @csrf
+        @endif
+    </form>
+</div>
+
+                        {{-- @else
+                        <p style="color: red;">Sản phẩm đã bán hết</p>
+                        @endif --}}
                     </div>
                 </div>
 
@@ -124,8 +145,78 @@
     <h4>Mô tả chi tiết</h4>
     {!! $product->content !!}
 </div>
+ <div class="reviews">
+            <h4>Viết câu hỏi của bạn về sản phẩm</h4>
+            <form action="{{ route('reviews.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <textarea name="comment" placeholder="Nhập câu hỏi của bạn" maxlength="255" rows="2"style="width: 100%; margin-bottom: 10px;"required></textarea>
+                <button type="submit"
+                    style="padding: 8px 16px; background-color: #28a745; color: white; border: none; cursor: pointer;">
+                    Gửi câu hỏi
+                </button>
+            </form>
 
+            <h4>Thắc mắc về sản phẩm</h4>
+            <div class="user-reviews">
+                @if($product->reviews->isEmpty())
+                <p>Chưa có câu hỏi nào cho sản phẩm này.</p>
+                @else
+                @foreach($product->reviews as $review)
+                <div class="review" style="border-bottom: 1px solid #ddd; padding: 10px 0;">
+                    <strong>{{ $review->user ? $review->user->name : 'Người dùng không xác định' }} 
+                        
+                    </strong>
+                    <p>{{ $review->comment }}</p>
+                    <small style="color: #999;">{{ $review->created_at->format('d/m/Y H:i') }}</small>
+
+                    <!-- Nút trả lời -->
+                    <button class="btn-reply"
+                        style="background: none; border: none; color: #007bff; cursor: pointer; margin-left: 10px;"
+                        onclick="toggleReplyForm({{ $review->id }})">
+                        Trả lời
+                    </button>
+
+                    <!-- Form trả lời ẩn -->
+                    <form action="{{ route('reviews.reply', $review->id) }}" method="POST"
+                        style="display: none; margin-top: 10px;" id="reply-form-{{ $review->id }}">
+                        @csrf
+                        <textarea name="reply" required placeholder="Nhập câu trả lời của bạn" rows="2"
+                            style="width: 100%; margin-bottom: 10px;"></textarea>
+                        <button type="submit"
+                            style="padding: 8px 16px; background-color: #007bff; color: white; border: none; cursor: pointer;">
+                            Gửi câu trả lời
+                        </button>
+                    </form>
+
+                    <!-- Hiển thị tất cả các câu trả lời -->
+                    @foreach($review->replies as $reply)
+                    <div class="reply" style="margin-top: 10px; border-left: 2px solid #007bff; padding-left: 10px;">
+                        <strong>
+    {{ $reply->user ? $reply->user->name . ($reply->user->role_id !== 2 ? ' (admin)' : '') : 'Người dùng không xác định' }}
+</strong>
+                        <p>{{ $reply->reply }}</p>
+                        <small style="color: #999;">{{ $reply->created_at->format('d/m/Y H:i') }}</small>
+                        <!-- Thêm dòng này -->
+                    </div>
+                    @endforeach
+                </div>
+                @endforeach
+                @endif
+            </div>
+        </div>
         </div> 
     </section>
 @endsection
 <link rel="stylesheet" href="{{ asset('css/contentproduct.css') }}">
+<script src="{{ asset('template/js/main2.js') }}"></script>
+<script>
+function toggleReplyForm(reviewId) {
+    var form = document.getElementById('reply-form-' + reviewId);
+    if (form.style.display === "none" || form.style.display === "") {
+        form.style.display = "block";
+    } else {
+        form.style.display = "none";
+    }
+}
+</script>

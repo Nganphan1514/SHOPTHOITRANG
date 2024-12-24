@@ -1134,8 +1134,37 @@ textarea::placeholder {
 
 /*//////////////////////////////////////////////////////////////////
 [ Slick1 ]*/
+.slide img {
+  width: 100%;
+  /* Đảm bảo hình ảnh rộng toàn khung */
+  height: auto;
+  /* Giữ nguyên tỉ lệ khung hình */
+  object-fit: contain;
+  /* Hình ảnh nằm gọn trong vùng chứa */
+}
+
+.slide {
+  width: 100%;
+  aspect-ratio: 16/9;
+  /* Tỉ lệ khung hình (tùy ý) */
+  overflow: hidden;
+}
+.slide {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  /* Tỉ lệ màn hình rộng */
+}
+
+@media (max-width: 768px) {
+  .slide {
+    aspect-ratio: 4 / 3;
+    /* Điều chỉnh tỉ lệ cho màn hình nhỏ */
+  }
+}
+
 .wrap-slick1 {
   position: relative;
+  overflow-x: hidden;
 }
 
 .item-slick1 {
@@ -1153,7 +1182,29 @@ textarea::placeholder {
 .rs2-slick1 .item-slick1 {
   height: 100vh;
 }
+@media (max-width: 768px) {
+  .slide {
+    font-size: 14px;
+    /* Adjust font size for smaller screens */
+  }
+}
 
+@media (max-width: 480px) {
+  .slide {
+    font-size: 12px;
+    /* Further adjust for very small screens */
+  }
+}
+.arrow {
+  font-size: 20px;
+  /* Adjust font size for arrows */
+}
+
+@media (max-width: 768px) {
+  .arrow {
+    font-size: 16px;
+  }
+}
 @media (max-width: 991px) {
   .item-slick1 {
     height: calc(100vh - 70px) !important;

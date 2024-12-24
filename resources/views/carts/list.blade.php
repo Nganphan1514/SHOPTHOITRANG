@@ -16,55 +16,94 @@
                                     <tr class="table_head">
                                         <th class="column-1">Sản Phẩm</th>
                                         <th class="column-2"></th>
-                                        <th class="column-3">Giá</th>
-                                        <th class="column-4">Số Lượng</th>
-                                        <th class="column-5">Tổng </th>
-                                        <th class="column-6">&nbsp;</th>
+                                        <th class="column-3">Size</th>
+                                        <th class="column-4">Giá</th>
+                                        <th class="column-5">Số Lượng</th>
+                                        {{-- <th class="column-6">Tổng </th> --}}
+                                        <th class="column-7">&nbsp;</th>
                                     </tr>
 
-                                    @foreach($products as $key => $product)
+@foreach($carts as $key => $quantity)
     @php
-        // Kiểm tra xem $quantity có phải là số hay không
-        $quantity = (isset($carts[$product->id])) ? (int) $carts[$product->id] : 0;
-
-        // Lấy giá của sản phẩm từ thuộc tính 'price'
-        $price = $product->price;
-
-        // Tính tổng giá trị của sản phẩm
+        [$product_id, $size_name] = explode('-', $key); // Tách key thành product_id và size_name
+        $product = $products->firstWhere('id', $product_id); // Lấy thông tin sản phẩm
+        $price = $product->price_sale != 0 ? $product->price_sale : $product->price;
         $priceEnd = $price * $quantity;
         $total += $priceEnd;
     @endphp
 
+    <tr class="table_row" id="product-row-{{ $product_id }}">
+        <td class="column-1">
+            <div class="how-itemcart1">
+                <img src="{{ $product->thumb }}" alt="IMG">
+            </div>
+        </td>
+        <td class="column-2">{{ $product->name }}</td>
+        <td class="column-3">{{ $size_name }}</td> <!-- Hiển thị size -->
+        <td class="column-4" id="price-{{ $product_id }}">{{ number_format($price, 0, '', '.') }}</td>
+        <td class="column-5" >
+            <div class="quantity-controls">
+                {{-- <button type="button" class="btn-quantity" onclick="updateQuantity('{{ $key }}', -1)">-</button> --}}
+                <input type="number" 
+                       name="num_product[{{ $key }}]" 
+                       value="{{ $quantity }}" 
+                       class="product-quantity"
+                       min="1"
+                       onchange="updateProductTotal('{{ $key }}', this.value)"
+                       id="quantity-{{ $key }}"
+                       style="width: 50px; text-align: center;margin-left: 40%">
+                {{-- <button type="button" class="btn-quantity" onclick="updateQuantity('{{ $key }}', 1)">+</button> --}}
+            </div>
+        </td>
+        {{-- <td class="column-6" id="total-{{ $key }}">{{ number_format($priceEnd, 0, '', '.') }}</td> --}}
+        <td class="p-r-15">
+            <a href="/carts/delete/{{ $key }}">Xóa</a>
+        </td>
+    </tr>
+@endforeach
 
 
-                                        <tr class="table_row">
-                                            <td class="column-1">
-                                                <div class="how-itemcart1">
-                                                    <img src="{{ $product->thumb }}" alt="IMG">
-                                                </div>
-                                            </td>
-                                            <td class="column-2">{{ $product->name }}</td>
-                                            <td class="column-3">{{ number_format($price, 0, '', '.') }}</td>
-                                            <td class="column-4">
-                                                <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                        <i class="fs-16 zmdi zmdi-minus"></i>
-                                                    </div>
+{{-- Add this JavaScript section at the bottom of your view --}}
+@section('scripts')
+<script>
+function updateQuantity(productId, change) {
+    const input = document.getElementById(`quantity-${productId}`);
+    let newValue = parseInt(input.value) + change;
+    if (newValue < 1) newValue = 1;
+    input.value = newValue;
+    updateProductTotal(productId, newValue);
+}
 
-                                                    <input class="mtext-104 cl3 txt-center num-product" type="number"
-    name="num_product[{{ $product->id }}]" value="{{ $quantity }}">
+function updateProductTotal(productId, quantity) {
+    const priceElement = document.getElementById(`price-${productId}`);
+    const totalElement = document.getElementById(`total-${productId}`);
+    
+    // Get price (remove dots and convert to number)
+    const price = parseInt(priceElement.innerText.replace(/\./g, ''));
+    const newTotal = price * quantity;
+    
+    // Update total with formatting
+    totalElement.innerText = newTotal.toLocaleString('vi-VN').replace(/,/g, '.');
+    
+    // Update cart total
+    updateCartTotal();
+}
 
-                                                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                        <i class="fs-16 zmdi zmdi-plus"></i>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="column-5">{{ number_format($priceEnd, 0, '', '.') }}</td>
-                                            <td class="p-r-15">
-                                                <a href="/carts/delete/{{ $product->id }}">Xóa</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+function updateCartTotal() {
+    let total = 0;
+    const totalElements = document.querySelectorAll('[id^="total-"]');
+    
+    totalElements.forEach(element => {
+        total += parseInt(element.innerText.replace(/\./g, ''));
+    });
+    
+    // Update the cart total display
+    const cartTotalElement = document.querySelector('.mtext-110.cl2');
+    cartTotalElement.innerText = total.toLocaleString('vi-VN').replace(/,/g, '.');
+}
+</script>
+@endsection
+
                                     </tbody>
                                 </table>
                             </div>

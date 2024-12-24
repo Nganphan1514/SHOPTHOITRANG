@@ -31,6 +31,7 @@
             <select name="role_id" id="role_id" class="form-select" required>
                 <option value="1" {{ $user->role_id == 1 ? 'selected' : '' }}>Admin</option>
                 <option value="2" {{ $user->role_id == 2 ? 'selected' : '' }}>User</option>
+                <option value="3" {{ $user->role_id == 3 ? 'selected' : '' }}>NV</option>
             </select>
         </div>
 

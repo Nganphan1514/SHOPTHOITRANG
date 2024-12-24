@@ -35,7 +35,7 @@ class User01Controller extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
-            'role_id' => 'required|in:1,2',
+            'role_id' => 'required|in:1,2,3',
         ]);
 
         $this->userService->insert($request);
@@ -93,7 +93,7 @@ class User01Controller extends Controller
               'name' => 'required|string|max:255',
               'email' => 'required|email|unique:users,email,' . $id,
               'password' => 'nullable|string|min:6|confirmed', // Kiểm tra mật khẩu nếu có
-              'role_id' => 'required|in:1,2',
+              'role_id' => 'required|in:1,2,3',
           ]);
       
           // Cập nhật các thông tin khác
